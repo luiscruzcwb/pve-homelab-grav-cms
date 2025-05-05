@@ -1,0 +1,64 @@
+# --- Terraform ---
+*.tfstate
+*.tfstate.*
+crash.log
+.terraform/
+.terraform.lock.hcl
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform.tfvars
+secrets.auto.tfvars
+secrets.auto.tfvars.json
+
+# --- Ansible ---
+*.retry
+*.log
+vault_password_file
+.vault_pass
+*.vault_pass
+ansible.cfg~
+inventory.ini~
+group_vars/*.yml~
+host_vars/*.yml~
+*.bak
+*.tmp
+
+# --- Sistema / Editor ---
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.code-workspace
+
+# --- Arquivos comprimidos ---
+*.zip
+*.tar.gz
+*.tar
+*.7z
+
+# --- Outras ---
+# Evitar chaves privadas SSH (ajuste conforme seu caso)
+*.pem
+*.key
+*.pub
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Arquivos temporários de execução
+__pycache__/
+*.pyc
+*.pyo
+
+# --- Backup ---
+*~
+
+# --- Env ---
+.env
+*.env

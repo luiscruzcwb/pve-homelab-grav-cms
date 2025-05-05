@@ -1,0 +1,9 @@
+- name: Instalar Apache, PHP e dependências
+  apt:
+    name:
+      - apache2
+      - php
+      - php-cli
+      - php-xml
+    state: present
+    update_cache: yes

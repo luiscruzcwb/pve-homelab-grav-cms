@@ -1,0 +1,75 @@
+---
+
+- name: Criar diretório do Grav
+  file:
+    path: "{{ grav_dir }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Instala pacotes necessários (Apache, PHP e dependências)
+  apt:
+    name:
+      - apache2
+      - php
+      - php-cli
+      - php-common
+      - php-curl
+      - php-gd
+      - php-mbstring
+      - php-xml
+      - php-zip
+      - unzip
+      - curl
+    state: present
+    update_cache: yes
+
+- name: Garantir que o mod_rewrite está ativado
+  apache2_module:
+    name: rewrite
+    state: present
+  notify: Reiniciar Apache
+
+- name: Baixa e instala o Grav com Admin Plugin
+  shell: |
+    cd {{ grav_dir }}
+    if [ ! -f index.php ]; then
+      curl -L https://getgrav.org/download/core/grav-admin/latest -o grav.zip
+      unzip grav.zip
+      rm grav.zip
+      mv grav-admin/* .
+      rm -rf grav-admin
+      rm -f index.html
+    fi
+  args:
+    creates: "{{ grav_dir }}/index.php"
+
+- name: Ajusta permissões para www-data
+  file:
+    path: "{{ grav_dir }}"
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+- name: Permitir Override no VirtualHost padrão
+  blockinfile:
+    path: /etc/apache2/sites-available/000-default.conf
+    marker: "# {mark} ANSIBLE MANAGED BLOCK grav AllowOverride"
+    block: |
+      <Directory /var/www/html>
+          AllowOverride All
+      </Directory>
+  notify: Reiniciar Apache
+
+- name: Garantir que o .htaccess foi copiado
+  copy:
+    remote_src: yes
+    src: "{{ grav_dir }}/webserver-configs/htaccess.txt"
+    dest: "{{ grav_dir }}/.htaccess"
+    owner: www-data
+    group: www-data
+    mode: '0644'
+
+
+

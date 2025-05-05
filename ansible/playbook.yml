@@ -1,0 +1,13 @@
+---
+- name: Configurar servidor Grav
+  hosts: grav
+  vars:
+    ansible_connection: ssh
+    ansible_user: root
+    pm_api_token_id: "{{ pm_api_token_id }}"
+    pm_api_token_secret: "{{ pm_api_token_secret }}"
+    pm_api_url: "{{ pm_api_url }}"
+
+  roles:
+    - apache_php
+    - grav
