@@ -20,7 +20,7 @@ Além disso, as variáveis sensíveis são armazenadas e gerenciadas de forma se
 
 # 🏗️ Arquitetura / Fluxo do Projeto
 
-Abaixo, uma visão geral moderna do fluxo do projeto, desde o provisionamento até a configuração do Grav CMS com Vault e Ansible:
+Visão do fluxo do projeto, desde o provisionamento até a configuração do Grav CMS com Vault e Ansible:
 
 <p align="center">
   <img src="fluxo.png" alt="Fluxo do Projeto" width="650">
